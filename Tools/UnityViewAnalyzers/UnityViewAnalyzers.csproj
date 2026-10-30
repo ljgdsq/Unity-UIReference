@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>UnityViewAnalyzers</AssemblyName>
+    <RootNamespace>UnityViewAnalyzers</RootNamespace>
+    <IsRoslynComponent>true</IsRoslynComponent>
+    <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- Unity 2022.3 的编译器是 Roslyn 4.3，分析器必须引用不高于它的版本。 -->
+    <NoWarn>$(NoWarn);RS1012;RS1026;RS1033;RS1038;RS2008</NoWarn>
+    <UnityPluginDirectory>$(MSBuildThisFileDirectory)..\..\Assets\Plugins\RoslynAnalyzers\</UnityPluginDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- 只把分析器本体复制到 Unity 工程，不要拷贝 Microsoft.CodeAnalysis 等运行库（Unity 自己提供）。 -->
+  <Target Name="CopyAnalyzerToUnity" AfterTargets="Build">
+    <MakeDir Directories="$(UnityPluginDirectory)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(UnityPluginDirectory)" />
+  </Target>
+
+</Project>

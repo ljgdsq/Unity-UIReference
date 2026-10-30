@@ -18,6 +18,7 @@
 /.vscode/
 /.idea/
 *.csproj
+!Tools/**/*.csproj
 *.sln
 *.slnx
 *.user
@@ -27,6 +28,10 @@
 *.unityproj
 *.opendb
 *.VC.db
+
+# Analyzer toolchain build output
+/Tools/**/[Bb]in/
+/Tools/**/[Oo]bj/
 
 # Local credentials and signing material
 .env
